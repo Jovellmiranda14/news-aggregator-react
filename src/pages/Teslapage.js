@@ -1,33 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Container, Spinner, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import NewsList from "../components/NewsList";
 
-export default function ApplePage() {
+import { fetchNews } from "../api/api";
+
+export default function TeslaPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getAppleNews = async () => {
-      setLoading(true);
+    const getTeslaNews = async () => {
       try {
-        const response = await fetch(`/api/news?category=apple`);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        setArticles(data.articles.slice(0, 12));
+        const news = await fetchNews("Tesla");
+        setArticles(news);
       } catch (error) {
-        console.error("Error fetching Apple news:", error);
+        console.error("Error fetching Tesla news:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    getAppleNews();
+    getTeslaNews();
   }, []);
 
   return (
-    <Container className="my-4 d-flex flex-column align-items-center">
+    <Container className="my-4">
       <Row>
         {loading ? (
           <div className="text-center my-4">
@@ -36,14 +33,7 @@ export default function ApplePage() {
             </Spinner>
           </div>
         ) : (
-          <>
-            <h2 className="text-center">Newspaper Website</h2>
-            <p className="text-center">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <NewsList articles={articles} category="Apple" />
-          </>
+          <NewsList articles={articles} category="tesla" />
         )}
       </Row>
     </Container>
