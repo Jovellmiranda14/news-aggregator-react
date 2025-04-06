@@ -1,36 +1,51 @@
 import React, { useEffect, useState } from "react";
-import { Container, Spinner } from "react-bootstrap";
+import { Container, Spinner, Row } from "react-bootstrap";
 import NewsList from "../components/NewsList";
-import { fetchNews } from "../api/api";
 
 export default function ApplePage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getAppleNews = async () => {
+      setLoading(true);
       try {
-        const news = await fetchNews("apple");
-        setArticles(news.slice(0, 12)); // Limit to 16 articles without shuffling
+        const response = await fetch(`/api/news?category=apple`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setArticles(data.articles.slice(0, 12));
       } catch (error) {
         console.error("Error fetching Apple news:", error);
       } finally {
         setLoading(false);
       }
     };
+
     getAppleNews();
   }, []);
 
   return (
-    <Container className="my-4">
-      {loading ? (
-        <div className="text-center my-4">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      ) : (
-        <NewsList articles={articles} category="Apple" />
-      )}
+    <Container className="my-4 d-flex flex-column align-items-center">
+      <Row>
+        {loading ? (
+          <div className="text-center my-4">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <>
+            <h2 className="text-center">Newspaper Website</h2>
+            <p className="text-center">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            </p>
+            <NewsList articles={articles} category="Apple" />
+          </>
+        )}
+      </Row>
     </Container>
   );
 }
