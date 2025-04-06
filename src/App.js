@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { fetchNews } from "./api/api";
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import TeslaPage from "./pages/Teslapage";
 import ApplePage from "./pages/Applepage";
@@ -11,21 +11,6 @@ import HomePage from "./pages/Homepage";
 import Articlepage from "./pages/Articlepage";
 
 export default function App() {
-  const [articles, setArticles] = useState([]);
-
-  // Fetch news articles on component mount
-  useEffect(() => {
-    const getNews = async () => {
-      try {
-        const news = await fetchNews();
-        setArticles(news); // Update articles state with fetched news
-      } catch (error) {
-        console.error("Error fetching news:", error);
-      }
-    };
-    getNews();
-  }, []);
-
   return (
     <Router>
       <div className="app-container container " style={{ maxWidth: "1152px" }}>
@@ -35,10 +20,7 @@ export default function App() {
           <Route path="/tesla" element={<TeslaPage />} />
           <Route path="/apple" element={<ApplePage />} />
           <Route path="/wallstreet" element={<WallStreetPage />} />
-          <Route
-            path="/:category/article/:id"
-            element={<Articlepage articles={articles} />}
-          />
+          <Route path="/:category/article/:id" element={<Articlepage />} />
         </Routes>
         <Footer footer="footer" />
       </div>
