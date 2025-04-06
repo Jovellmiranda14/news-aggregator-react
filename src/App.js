@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import { fetchNews } from "./api/api";
+import "bootstrap/dist/css/bootstrap.min.css";
+import TeslaPage from "./pages/Teslapage";
+import ApplePage from "./pages/Applepage";
+import WallStreetPage from "./pages/WallStreetpage";
+import HomePage from "./pages/Homepage";
+import Articlepage from "./pages/Articlepage";
 
-function App() {
+export default function App() {
+  const [articles, setArticles] = useState([]);
+
+  // Fetch news articles on component mount
+  useEffect(() => {
+    const getNews = async () => {
+      try {
+        const news = await fetchNews();
+        setArticles(news); // Update articles state with fetched news
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
+    };
+    getNews();
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="app-container container " style={{ maxWidth: "1152px" }}>
+        <Header title="News App" />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/tesla" element={<TeslaPage />} />
+          <Route path="/apple" element={<ApplePage />} />
+          <Route path="/wallstreet" element={<WallStreetPage />} />
+          <Route
+            path="/:category/article/:id"
+            element={<Articlepage articles={articles} />}
+          />
+        </Routes>
+        <Footer footer="footer" />
+      </div>
+    </Router>
   );
 }
-
-export default App;
