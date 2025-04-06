@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { fetchNews } from "../api/api";
 
 export default function Top10Latest() {
   const [articles, setArticles] = useState([]);
@@ -12,20 +13,9 @@ export default function Top10Latest() {
 
   useEffect(() => {
     const getLatestNews = async () => {
-      setLoading(true);
       try {
-        const businessResponse = await fetch(`/api/news?category=business`);
-        const techcrunchResponse = await fetch(`/api/news?category=techcrunch`);
-
-        if (!businessResponse.ok || !techcrunchResponse.ok) {
-          throw new Error("Failed to fetch latest news");
-        }
-
-        const businessData = await businessResponse.json();
-        const techcrunchData = await techcrunchResponse.json();
-
-        const combinedNews = [...businessData.articles, ...techcrunchData.articles];
-        const shuffledNews = shuffleArray(combinedNews).slice(0, 10);
+        const news = await fetchNews("business", "techcrunch"); // Fetch the latest news
+        const shuffledNews = shuffleArray(news.slice(0, 10)); // Shuffle and limit to top 10
         setArticles(shuffledNews);
       } catch (error) {
         console.error("Error fetching latest news:", error);
@@ -48,20 +38,17 @@ export default function Top10Latest() {
   }
 
   return (
-    <Container className=" d-flex flex-column">
-      <h3>Top Ten Topics</h3>
+    <Container className="my-4" >
+      <h4>Top Ten Topics</h4>
       <ListGroup className="gap-1 d-flex flex-column">
         {articles.map((article, index) => (
-          <ListGroup.Item key={index} className="mb-2 gap-2">
+          <ListGroup.Item key={index} className="border mb-2 gap-2">
             <Link
               to={`/article/${index}`}
               className="text-decoration-none text-dark"
-              state={{ article }}
             >
-              <h1 className="fs-5 mb-1 text-wrap two-line-truncate">
-                {article.title.length > 50
-                  ? article.title.substring(0, 45) + "..."
-                  : article.title}
+              <h1 className="mb-1 text-truncate" style={{ fontSize: "20px" }}>
+                {article.title}
               </h1>
             </Link>
           </ListGroup.Item>
