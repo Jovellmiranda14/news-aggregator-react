@@ -5,6 +5,17 @@ const API_KEY = process.env.NEWS_API_KEY;
 const BASE_URL = 'https://newsapi.org/v2';
 
 export default async function handler(req, res) {
+  // Set CORS headers
+  res.setHeader('Access-Control-Allow-Origin', '*'); // Replace '*' with your domain(s) in production
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  // Handle OPTIONS preflight requests
+  if (req.method === 'OPTIONS') {
+    res.status(200).end();
+    return;
+  }
+
   const { searchTerm, category } = req.query;
   let url = '';
   const params = { apiKey: API_KEY };
