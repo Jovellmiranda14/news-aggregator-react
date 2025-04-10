@@ -24,7 +24,7 @@ export default function Header() {
       setLoading(true);
       setError(null);
       try {
-        const response = await fetch(`/api/news?category=general`); // Fetch via proxy
+        const response = await fetch(); // Fetch via proxy
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }

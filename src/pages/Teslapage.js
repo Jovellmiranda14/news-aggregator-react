@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Container, Row, Spinner } from "react-bootstrap";
 import NewsList from "../components/NewsList";
 
-import { fetchNews } from "../api/api";
-
 export default function TeslaPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -11,8 +9,10 @@ export default function TeslaPage() {
   useEffect(() => {
     const getTeslaNews = async () => {
       try {
-        const news = await fetchNews("Tesla");
-        setArticles(news);
+        let res = await fetch("http://localhost:3000/api/api?q=tesla");
+        res = await res.json();
+        setArticles(res.articles.slice(0, 12));
+
       } catch (error) {
         console.error("Error fetching Tesla news:", error);
       } finally {

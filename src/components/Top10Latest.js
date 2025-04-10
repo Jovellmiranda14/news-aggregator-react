@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { fetchNews } from "../api/api";
 
 export default function Top10Latest() {
   const [articles, setArticles] = useState([]);
@@ -14,11 +13,24 @@ export default function Top10Latest() {
   useEffect(() => {
     const getLatestNews = async () => {
       try {
-        const news = await fetchNews("business", "techcrunch"); // Fetch the latest news
-        const shuffledNews = shuffleArray(news.slice(0, 10)); // Shuffle and limit to top 10
+        const urls = [
+          "http://localhost:3000/api/api?q=techcrunch",
+          "http://localhost:3000/api/api?q=business"
+        ];
+
+        // Fetch both in parallel
+        const responses = await Promise.all(urls.map((url) => fetch(url)));
+        const jsonData = await Promise.all(responses.map((res) => res.json()));
+
+        // Combine articles from both responses
+        const combinedArticles = [...jsonData[0].articles, ...jsonData[1].articles];
+
+        // Shuffle and take top 10
+        const shuffledNews = shuffleArray(combinedArticles).slice(0, 10);
+
         setArticles(shuffledNews);
       } catch (error) {
-        console.error("Error fetching latest news:", error);
+        console.error("❌ Error fetching latest news:", error);
       } finally {
         setLoading(false);
       }
@@ -38,7 +50,7 @@ export default function Top10Latest() {
   }
 
   return (
-    <Container className="my-4" >
+    <Container className="my-4">
       <h4>Top Ten Topics</h4>
       <ListGroup className="gap-1 d-flex flex-column">
         {articles.map((article, index) => (

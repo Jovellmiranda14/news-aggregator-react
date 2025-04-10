@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Container, Spinner } from "react-bootstrap";
 import NewsList from "../components/NewsList";
-import { fetchNews } from "../api/api";
 
 export default function ApplePage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getAppleNews = async () => {
       try {
-        const news = await fetchNews("apple");
-        setArticles(news.slice(0, 12)); // Limit to 16 articles without shuffling
+        let res = await fetch("http://localhost:3000/api/api?q=apple");
+         res = await res.json();
+        setArticles(res.articles.slice(0, 12)); // Limit to 12 articles
       } catch (error) {
-        console.error("Error fetching Apple news:", error);
+        console.error("❌ Error fetching Apple news:", error);
       } finally {
         setLoading(false);
       }
