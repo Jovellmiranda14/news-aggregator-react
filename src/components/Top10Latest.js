@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Container, ListGroup, Spinner } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function Top10Latest() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
+  const hasFetched = useRef(false); // Prevent multiple fetches
 
   const shuffleArray = (array) => {
     return array.sort(() => Math.random() - 0.5);
   };
 
   useEffect(() => {
+    if (hasFetched.current) return;
+    hasFetched.current = true;
+
     const getLatestNews = async () => {
       try {
         const urls = [
-          "http://localhost:3000/api/api?q=techcrunch",
-          "http://localhost:3000/api/api?q=business"
+          `${process.env.REACT_APP_API_URL}/api/api?q=techcrunch`,
+          `${process.env.REACT_APP_API_URL}/api/api?q=business`,
         ];
 
-        // Fetch both in parallel
         const responses = await Promise.all(urls.map((url) => fetch(url)));
-        const jsonData = await Promise.all(responses.map((res) => res.json()));
+        const data = await Promise.all(responses.map((res) => res.json()));
 
-        // Combine articles from both responses
-        const combinedArticles = [...jsonData[0].articles, ...jsonData[1].articles];
-
-        // Shuffle and take top 10
+        const combinedArticles = [...data[0].articles, ...data[1].articles];
         const shuffledNews = shuffleArray(combinedArticles).slice(0, 10);
 
         setArticles(shuffledNews);
@@ -57,9 +57,17 @@ export default function Top10Latest() {
           <ListGroup.Item key={index} className="border mb-2 gap-2">
             <Link
               to={`/article/${index}`}
-              className="text-decoration-none text-dark"
+              className="text-dark"
+              style={{ textDecoration: "none" }}
             >
-              <h1 className="mb-1 text-truncate" style={{ fontSize: "20px" }}>
+              <h1
+                className="mb-1"
+                style={{
+                  fontSize: "20px",
+                  whiteSpace: "normal",
+                  wordBreak: "break-word",
+                }}
+              >
                 {article.title}
               </h1>
             </Link>
