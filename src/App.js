@@ -13,7 +13,7 @@ import Articlepage from "./pages/Articlepage";
 export default function App() {
   return (
     <Router>
-      <div className="app-container container " style={{ maxWidth: "1152px" }}>
+      <div className="app-container container " style={{ maxWidth: "1352px" }}>
         <Header title="News App" />
         <Routes>
           <Route path="/" element={<HomePage />} />
