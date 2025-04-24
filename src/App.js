@@ -21,6 +21,7 @@ export default function App() {
           <Route path="/apple" element={<ApplePage />} />
           <Route path="/wallstreet" element={<WallStreetPage />} />
           <Route path="/:category/article/:id" element={<Articlepage />} />
+          <Route path="/article/:id" element={<Articlepage />} />
         </Routes>
         <Footer footer="footer" />
       </div>
