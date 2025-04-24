@@ -23,9 +23,13 @@ export default function Top10Latest() {
         ];
 
         const responses = await Promise.all(urls.map((url) => fetch(url)));
-        const combinedArticles = shuffleArray(responses).slice(0, 10);
+        const data = await Promise.all(responses.map((res) => res.json()));
 
-        setArticles(combinedArticles);
+        const combinedArticles = [...data[0].articles, ...data[1].articles];
+        const shuffledNews = shuffleArray(combinedArticles).slice(0, 10);
+
+        setArticles(shuffledNews);
+
       } catch (error) {
         console.error("❌ Error fetching latest news:", error);
       } finally {
