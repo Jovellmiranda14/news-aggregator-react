@@ -1,24 +1,39 @@
 import React, { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Spinner, Row } from "react-bootstrap";
 import NewsList from "../components/NewsList";
-
 
 export default function WallStreetPage() {
   const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getWSJNews = async () => {
-      let res = await fetch("http://localhost:3000/api/api?q=wsj");
-      res = await res.json();
-      setArticles(res.articles.slice(0, 12));
+      try {
+        let res = await fetch(`${process.env.REACT_APP_API_URL}/api/api?q=wsj`);
+        res = await res.json();
+        setArticles(res.articles.slice(0, 12)); // Limit to 12 articles
+      } catch (error) {
+        console.error("❌ Error fetching Wall Street Journal news:", error);
+      } finally {
+        setLoading(false); // Ensure loading state is updated
+      }
     };
     getWSJNews();
   }, []);
 
   return (
     <Container className="my-4">
-      <h2>Wall Street Journal News</h2>
-      <NewsList articles={articles} category="wsj" />
+      <Row>
+        {loading ? (
+          <div className="text-center my-4">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <NewsList articles={articles} category="Wall Street Journal" />
+        )}
+      </Row>
     </Container>
   );
 }

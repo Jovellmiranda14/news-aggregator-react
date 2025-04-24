@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Spinner } from "react-bootstrap";
+import { Container, Spinner, Row } from "react-bootstrap";
 import NewsList from "../components/NewsList";
 
 export default function ApplePage() {
@@ -9,7 +9,7 @@ export default function ApplePage() {
   useEffect(() => {
     const getAppleNews = async () => {
       try {
-        let res = await fetch("http://localhost:3000/api/api?q=apple");
+        let res = await fetch(`${process.env.REACT_APP_API_URL}/api/api?q=apple`);
          res = await res.json();
         setArticles(res.articles.slice(0, 12)); // Limit to 12 articles
       } catch (error) {
@@ -23,15 +23,17 @@ export default function ApplePage() {
 
   return (
     <Container className="my-4">
-      {loading ? (
-        <div className="text-center my-4">
-          <Spinner animation="border" role="status">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-        </div>
-      ) : (
-        <NewsList articles={articles} category="Apple" />
-      )}
+      <Row> 
+        {loading ? (
+          <div className="text-center my-4">
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Loading...</span>
+            </Spinner>
+          </div>
+        ) : (
+          <NewsList articles={articles} category="Apple" />
+        )}
+      </Row>
     </Container>
   );
 }
