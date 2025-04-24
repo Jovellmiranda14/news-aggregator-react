@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import Top10Latest from "./Top10Latest"; // Import the Top10Latest component
 
 export default function NewsList({ articles, category }) {
-  const placeholderImage = "https://via.placeholder.com/150x100?text=No+Image";
+  const placeholderImage =
+    "https://placehold.co/600x400?text=No+Image+Available";
   const limitedArticles = articles.slice(0, 16);
 
   return (
@@ -19,18 +20,12 @@ export default function NewsList({ articles, category }) {
                   <Card.Img
                     variant="top"
                     src={article.urlToImage || placeholderImage}
-                    alt={article.title || "No Image Available"}
                     className="img-fluid"
                     style={{ height: "150px", objectFit: "cover" }}
                   />
                   <Card.Body className="p-2">
-                    <Card.Title
-                      className="text-truncate"
-                      style={{ fontSize: "20px" }}
-                    >
-                      {article.title.length > 50
-                        ? article.title.slice(0, 50) + "..."
-                        : article.title}
+                    <Card.Title className="fs-5 text-truncate">
+                      {article.title}
                     </Card.Title>
                     <Card.Text
                       className="text-muted"
@@ -38,7 +33,10 @@ export default function NewsList({ articles, category }) {
                     >
                       <small>{article.source?.name}</small>
                     </Card.Text>
-                    <Link to={`/${category}/article/${index}`} state={{ article }}>
+                    <Link
+                      to={`/${category}/article/${index}`}
+                      state={{ article }}
+                    >
                       <Button
                         variant="primary"
                         size="sm"
