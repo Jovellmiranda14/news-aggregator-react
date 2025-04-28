@@ -74,9 +74,3 @@ news-aggregator-react/
 - [News API](https://newsapi.org/) — news data source
 
 ---
-
-## 📄 License
-
-This project is open-source and available under the [MIT License](LICENSE).
-
----
