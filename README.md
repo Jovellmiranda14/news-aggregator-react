@@ -1,70 +1,86 @@
-# Getting Started with Create React App
+Sure! Here's your cleaned-up version — more organized, consistently styled, and slightly more professional but still simple and clear:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+# 📰 News Aggregator React App
 
-In the project directory, you can run:
+A sleek, responsive news aggregator built with **React**, fetching and displaying the latest articles from various sources using the **News API**.  
+Bootstrapped with [News API](https://newsapi.org/).
 
-### `npm start`
 
-Runs the app in the development mode.\
+---
+
+## ✨ Features
+
+- 🔥 Fetch and display top headlines and category-specific news
+- 🔍 Search for news articles by keyword
+- 📖 View full article details
+- 📱 Fully responsive for desktop and mobile devices
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/Jovellmiranda/news-aggregator-react.git
+cd news-aggregator-react
+```
+
+### 2. Install Dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+
+Create a `.env` file in the project root and add your News API key:
+
+```
+REACT_APP_NEWS_API_KEY=your_news_api_key_here
+```
+
+### 4. Run the Development Server
+
+```bash
+npm start
+```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## 🗂️ Folder Structure
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+news-aggregator-react/
+├── public/                # Static assets
+├── src/
+│   ├── api/                # API interaction logic
+│   ├── components/         # Reusable UI components (Header, Footer, etc.)
+│   ├── pages/              # Page components (HomePage, ArticlePage, etc.)
+│   ├── App.js              # Main app component
+│   ├── App.css             # Global styles
+│   └── index.js            # Entry point
+├── .env                    # Environment variables
+├── package.json            # Project metadata and dependencies
+└── README.md               # Project documentation
+```
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🛠️ Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- [React](https://reactjs.org/)
+- [Axios](https://axios-http.com/) — for API calls
+- [News API](https://newsapi.org/) — news data source
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 📄 License
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This project is open-source and available under the [MIT License](LICENSE).
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
