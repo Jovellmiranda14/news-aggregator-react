@@ -1,7 +1,3 @@
-Sure! Here's your cleaned-up version — more organized, consistently styled, and slightly more professional but still simple and clear:
-
----
-
 # 📰 News Aggregator React App
 
 A sleek, responsive news aggregator built with **React**, fetching and displaying the latest articles from various sources using the **News API**.  
