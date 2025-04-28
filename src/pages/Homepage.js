@@ -1,18 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Container, Row, Spinner } from "react-bootstrap";
 import NewsList from "../components/NewsList";
 
 export default function HomePage() {
   const [articles, setArticles] = useState([]);
-  const location = useLocation();
   const [loading, setLoading] = useState(true);
-  const passedSuggestions = location.state?.suggestions;
-
-  // Function to shuffle an array
-  const shuffleArray = (array) => {
-    return array.sort(() => Math.random() - 0.5);
-  };
 
   useEffect(() => {
     const getDefaultNews = async () => {
@@ -26,17 +18,10 @@ export default function HomePage() {
 
         // Fetch all URLs in parallel
         const responses = await Promise.all(urls.map((url) => fetch(url)));
-        const data = await Promise.all(responses.map((res) => res.json()));
+        const allData = await Promise.all(responses.map((res) => res.json()));
 
-        // Combine and shuffle articles from all responses
-        const combinedArticles = shuffleArray([
-          ...data[0].articles,
-          ...data[1].articles,
-          ...data[2].articles,
-        ]);
-
-        // Limit to 12 articles
-        setArticles(combinedArticles.slice(0, 12));
+        // Use only the first API response (e.g., Apple news)
+        setArticles(allData[0].articles.slice(0, 12)); // Limit to 12 articles
       } catch (err) {
         console.error("Error fetching default news:", err);
       } finally {
@@ -44,14 +29,8 @@ export default function HomePage() {
       }
     };
 
-    // If suggestions were passed from the search bar, use them
-    if (passedSuggestions && passedSuggestions.length > 0) {
-      setArticles(passedSuggestions);
-      setLoading(false); // End loading if suggestions are used
-    } else {
-      getDefaultNews();
-    }
-  }, [passedSuggestions]);
+    getDefaultNews(); // Fetch default news on component mount
+  }, []);
 
   return (
     <Container className="my-4">
@@ -63,7 +42,7 @@ export default function HomePage() {
             </Spinner>
           </div>
         ) : (
-          <NewsList articles={articles} category="Everything" />
+          <NewsList articles={articles} category="/" />
         )}
       </Row>
     </Container>

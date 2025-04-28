@@ -87,9 +87,9 @@ export default function Header() {
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto mb-2 mb-lg-0">
-            <Nav.Link as={NavLink} to="/">
+            {/* <Nav.Link as={NavLink} to="/">
               Home
-            </Nav.Link>
+            </Nav.Link> */}
             <Nav.Link as={NavLink} to="/tesla">
               Tesla
             </Nav.Link>
