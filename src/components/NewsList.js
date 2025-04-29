@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, Container, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import Top10Latest from "./Top10Latest"; // Import the Top10Latest component
+import Top10Latest from "./Top10Latest"; 
 
 export default function NewsList({ articles, category }) {
   const placeholderImage =

@@ -8,7 +8,7 @@ export default function HomePage() {
 
   useEffect(() => {
     const getDefaultNews = async () => {
-      setLoading(true); // Start loading
+      setLoading(true); 
       try {
         const urls = [
           `${process.env.REACT_APP_API_URL}/api/api?q=apple`,
@@ -20,16 +20,15 @@ export default function HomePage() {
         const responses = await Promise.all(urls.map((url) => fetch(url)));
         const allData = await Promise.all(responses.map((res) => res.json()));
 
-        // Use only the first API response (e.g., Apple news)
         setArticles(allData.flatMap((data) => data.articles).slice(0, 12)); // Limit to 12 articles
       } catch (err) {
         console.error("Error fetching default news:", err);
       } finally {
-        setLoading(false); // End loading
+        setLoading(false); 
       }
     };
 
-    getDefaultNews(); // Fetch default news on component mount
+    getDefaultNews();
   }, []);
 
   return (

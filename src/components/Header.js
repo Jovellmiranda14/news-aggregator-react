@@ -135,7 +135,7 @@ export default function Header() {
                       key={index}
                       className="dropdown-item text-start text-truncate"
                       onClick={(e) => handleAction(e, suggestion, index)}
-                      title={suggestion.title} // Full title shown on hover
+                      title={suggestion.title}
                     >
                       {suggestion.title}
                     </button>

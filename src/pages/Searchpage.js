@@ -11,7 +11,7 @@ export default function SearchPage() {
 
    useEffect(() => {
       const getDefaultNews = async () => {
-        setLoading(true); // Start loading
+        setLoading(true);
         try {
           const queries = suggestions.length > 0 ? suggestions : ["apple", "tesla", "wsj"]; 
           const urls = queries.map(
@@ -32,17 +32,16 @@ export default function SearchPage() {
           // Combine articles from all responses
           const combinedArticles = allData.flatMap((data) => data.articles || []);
   
-          // Limit to 12 articles
           setArticles(combinedArticles.slice(0, 12));
         } catch (err) {
           console.error("Error fetching news:", err);
         } finally {
-          setLoading(false); // End loading
+          setLoading(false); 
         }
       };
   
-      getDefaultNews(); // Fetch news on component mount or when suggestions change
-    }, []); // 
+      getDefaultNews();
+    }, []); // Will always re-fetch if I inserted suggestions 
   return (
     <Container className="my-4">
       <Row>

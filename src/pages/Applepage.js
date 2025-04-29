@@ -11,7 +11,7 @@ export default function ApplePage() {
       try {
         let res = await fetch(`${process.env.REACT_APP_API_URL}/api/api?q=apple`);
          res = await res.json();
-        setArticles(res.articles.slice(0, 12)); // Limit to 12 articles
+        setArticles(res.articles.slice(0, 12)); 
       } catch (error) {
         console.error("❌ Error fetching Apple news:", error);
       } finally {

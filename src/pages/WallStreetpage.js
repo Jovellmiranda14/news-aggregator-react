@@ -11,11 +11,11 @@ export default function WallStreetPage() {
       try {
         let res = await fetch(`${process.env.REACT_APP_API_URL}/api/api?q=wsj`);
         res = await res.json();
-        setArticles(res.articles.slice(0, 12)); // Limit to 12 articles
+        setArticles(res.articles.slice(0, 12)); 
       } catch (error) {
         console.error("❌ Error fetching Wall Street Journal news:", error);
       } finally {
-        setLoading(false); // Ensure loading state is updated
+        setLoading(false); 
       }
     };
     getWSJNews();

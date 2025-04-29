@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 export default function Articlepage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const article = location.state?.article; // Retrieve the passed article
+  const article = location.state?.article; 
 
   if (!article) {
     return (
