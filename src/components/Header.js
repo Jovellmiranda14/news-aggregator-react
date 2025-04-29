@@ -15,10 +15,10 @@ export default function Header() {
   const [allArticles, setAllArticles] = useState([]);
   const [suggestions, setSuggestions] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [, setError] = useState(null);
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Dynamic fetch when user submits or types enough characters
+  // Fetch articles dynamically based on user input
   const fetchArticles = async (query = "") => {
     setLoading(true);
     setError(null);
@@ -41,7 +41,7 @@ export default function Header() {
     }
   };
 
-  // Trigger filtering of suggestions when input changes
+  // Trigger fetch when input changes and is long enough
   useEffect(() => {
     if (input.length > 3) {
       fetchArticles(input); // Fetch based on user input
@@ -50,6 +50,7 @@ export default function Header() {
     }
   }, [input]);
 
+  // Filter suggestions based on input
   useEffect(() => {
     const filteredSuggestions = allArticles.filter(
       (article) =>
@@ -57,7 +58,7 @@ export default function Header() {
         (article.content &&
           article.content.toLowerCase().includes(input.toLowerCase()))
     );
-    setSuggestions(filteredSuggestions.slice(0, 10)); // Limit to 10 suggestions
+    setSuggestions(filteredSuggestions.slice(0, 15));
   }, [allArticles, input]);
 
   const handleAction = (e, suggestion = null, index = null) => {
@@ -65,14 +66,15 @@ export default function Header() {
 
     if (suggestion) {
       // Handle suggestion click
-      setInput(" ");
+      setInput("");
       navigate(`/${suggestion.category || "general"}/article/${index}`, {
         state: { article: suggestion },
       });
-    } else if (input.trim().length > 2) {
+    } else if (input.trim().length > 3) {
       // Handle search
-      navigate("/", {
-        state: { suggestions: suggestions }, // Pass the filtered suggestions to the HomePage
+      setInput("");
+      navigate("/Search", {
+        state: { suggestions: [input] }, // Pass the search query as suggestions
       });
     }
   };
@@ -87,9 +89,9 @@ export default function Header() {
         <Navbar.Toggle aria-controls="navbar-nav" />
         <Navbar.Collapse id="navbar-nav">
           <Nav className="ms-auto mb-2 mb-lg-0">
-            {/* <Nav.Link as={NavLink} to="/">
+            <Nav.Link as={NavLink} to="/">
               Home
-            </Nav.Link> */}
+            </Nav.Link>
             <Nav.Link as={NavLink} to="/tesla">
               Tesla
             </Nav.Link>
@@ -113,7 +115,11 @@ export default function Header() {
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
               />
-              <Button variant="primary" type="submit" disabled={loading}>
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={loading || input.trim().length === 0}
+              >
                 {loading ? <Spinner animation="border" size="sm" /> : "Search"}
               </Button>
             </InputGroup>
@@ -134,7 +140,11 @@ export default function Header() {
                       {suggestion.title}
                     </button>
                   ))
-                ) : null}
+                ) : (
+                  <div className="dropdown-item text-center">
+                    No suggestions found.
+                  </div>
+                )}
               </div>
             )}
           </Form>

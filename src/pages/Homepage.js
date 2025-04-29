@@ -21,7 +21,7 @@ export default function HomePage() {
         const allData = await Promise.all(responses.map((res) => res.json()));
 
         // Use only the first API response (e.g., Apple news)
-        setArticles(allData[0].articles.slice(0, 12)); // Limit to 12 articles
+        setArticles(allData.flatMap((data) => data.articles).slice(0, 12)); // Limit to 12 articles
       } catch (err) {
         console.error("Error fetching default news:", err);
       } finally {
@@ -42,7 +42,7 @@ export default function HomePage() {
             </Spinner>
           </div>
         ) : (
-          <NewsList articles={articles} category="/" />
+          <NewsList articles={articles} category="Home" />
         )}
       </Row>
     </Container>
