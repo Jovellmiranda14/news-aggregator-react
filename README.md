@@ -78,3 +78,9 @@ news-aggregator-react/
 - ❌ Failed to Deploy on Vercel
 - ❌ Search Function Not Working
 - ❌ Getting the Full Content of the article
+
+
+--- 
+## 🔗 Related API Repository
+- For the backend API used by this project, visit the [News Aggregator React API Repository](https://github.com/Jovellmiranda/news-aggregator-react-api) .
+
