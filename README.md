@@ -73,3 +73,8 @@ news-aggregator-react/
 - [News API](https://newsapi.org/) — news data source
 
 ---
+
+## ⚠️ Issues Encountered Last Time
+- ❌ Failed to Deploy on Vercel
+- ❌ Search Function Not Working
+- ❌ Getting the Full Content of the article
