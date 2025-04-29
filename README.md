@@ -11,7 +11,6 @@ Bootstrapped with [News API](https://newsapi.org/).
 - 🔥 Fetch and display top headlines and category-specific news
 - 🔍 Search for news articles by keyword
 - 📖 View full article details
-- 📱 Fully responsive for desktop and mobile devices
 
 ---
 
