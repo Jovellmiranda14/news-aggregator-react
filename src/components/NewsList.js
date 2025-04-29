@@ -4,9 +4,8 @@ import { Link } from "react-router-dom";
 import Top10Latest from "./Top10Latest"; 
 
 export default function NewsList({ articles, category }) {
-  const placeholderImage =
-    "https://placehold.co/600x400?text=No+Image+Available";
-  const limitedArticles = articles.slice(0, 16);
+  const placeholderImage = "https://placehold.co/600x400?text=No+Image+Available";
+  const limitedArticles = (articles || []).filter(Boolean).slice(0, 16); // 🛡️ filter out broken entries
 
   return (
     <Container className="mt-4">
@@ -19,19 +18,19 @@ export default function NewsList({ articles, category }) {
                 <Card className="h-100 border-black shadow-sm">
                   <Card.Img
                     variant="top"
-                    src={article.urlToImage || placeholderImage}
+                    src={article?.urlToImage || placeholderImage} // 🛡️ safe access
                     className="img-fluid"
                     style={{ height: "150px", objectFit: "cover" }}
                   />
                   <Card.Body className="p-2">
                     <Card.Title className="fs-5 text-truncate">
-                      {article.title}
+                      {article?.title || "No Title"}
                     </Card.Title>
                     <Card.Text
                       className="text-muted"
                       style={{ fontSize: "16px" }}
                     >
-                      <small>{article.source?.name}</small>
+                      <small>{article?.source?.name || "Unknown Source"}</small>
                     </Card.Text>
                     <Link
                       to={`/${category}/article/${index}`}
@@ -52,6 +51,7 @@ export default function NewsList({ articles, category }) {
           </Row>
         </Col>
 
+        {/* Top10Latest Sidebar */}
         <Col md={3}>
           <Top10Latest />
         </Col>
