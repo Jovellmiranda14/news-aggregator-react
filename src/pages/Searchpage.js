@@ -52,7 +52,7 @@ export default function SearchPage() {
             </Spinner>
           </div>
         ) : articles.length > 0 ? (
-          <NewsList articles={articles} category="Search" />
+          <NewsList articles={articles} category="search" />
         ) : (
           <div className="text-center my-4">
             <p>No search results available. Please try searching again.</p>
