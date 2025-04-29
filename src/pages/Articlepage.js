@@ -1,22 +1,68 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Image, Button } from "react-bootstrap";
-import { useLocation, useNavigate } from "react-router-dom";
-
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import DOMPurify from "dompurify";
 export default function Articlepage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const article = location.state?.article; 
+  const [searchParams] = useSearchParams();
+  const urlParam = searchParams.get("url");
 
-  if (!article) {
-    return (
-      <Container className="my-4 text-center">
-        <h2>Article not found.</h2>
-        <Button variant="secondary" onClick={() => navigate(-1)}>
-          Go Back
-        </Button>
-      </Container>
-    );
-  }
+  const [fullContent, setFullContent] = useState("Loading content...");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const fallbackArticle = location.state?.article || {
+    title: "Untitled Article",
+    publishedAt: new Date().toISOString(),
+    urlToImage: null,
+    author: "Unknown",
+    source: { name: "Unknown" },
+  };
+
+  useEffect(() => {
+    const fetchFullContent = async () => {
+      if (!urlParam) return;
+
+      setLoading(true);
+      try {
+        // Fetch the full article content using the URL parameter
+        const response = await fetch(
+          `${
+            process.env.REACT_APP_API_URL
+          }/api/article?url=${encodeURIComponent(urlParam)}`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const { content } = data;
+
+        if (content) {
+          // Clean the content for better readability
+          const cleanContent = content
+            .replace(/\n+/g, "\n")
+            .replace(/^\s+|\s+$/g, "")
+            .replace(/(\n\s*\n)+/g, "\n\n");
+
+          setFullContent(cleanContent);
+        } else {
+          setFullContent("Content could not be retrieved.");
+        }
+      } catch (err) {
+        console.error("Error fetching full article content:", err);
+        setError(
+          `The content from the following link could not be loaded: ${urlParam}. This may be due to restrictions or an invalid URL.`
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFullContent();
+  }, [urlParam]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -32,26 +78,53 @@ export default function Articlepage() {
       }),
     };
   };
+  const sanitizedContent = DOMPurify.sanitize(fullContent);
 
-  const { formattedDate, formattedTime } = formatDate(article.publishedAt);
+
+  const { formattedDate, formattedTime } = formatDate(
+    fallbackArticle.publishedAt
+  );
 
   return (
     <Container className="my-4">
-      {article.urlToImage && (
+      {fallbackArticle.urlToImage && (
         <Image
-          src={article.urlToImage}
-          alt={article.title}
+          src={fallbackArticle.urlToImage}
+          alt={fallbackArticle.title}
           className="mb-3"
           fluid
+          style={{ width: "100%", height: "auto" }} // Full width, maintain aspect ratio
         />
       )}
-      <h1>{article.title}</h1>
-      <p>By: {article.author || "Unknown"}</p>
+      <h1>{fallbackArticle.title}</h1>
+      <p>By: {fallbackArticle.author || "Unknown"}</p>
       <p>
         Published at: {formattedDate} {formattedTime}
       </p>
-      <p>Source: {article.source?.name}</p>
-      <div>{article.content}</div>
+      <p>Source: {fallbackArticle.source?.name}</p>
+  
+      <div className="mt-4">
+        {loading ? (
+          <p>Loading full content...</p>
+        ) : error ? (
+          <div>
+            <p>{error}</p>
+            <a href={urlParam} target="_blank" rel="noopener noreferrer">
+              Click here to view the article directly.
+            </a>
+          </div>
+        ) : (
+          <div
+          style={{ maxWidth: "1352px", margin: "0 auto" }}
+          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+        />
+        
+        )}
+      </div>
+  
+      <Button variant="secondary" className="mt-3" onClick={() => navigate(-1)}>
+        Go Back
+      </Button>
     </Container>
   );
 }
