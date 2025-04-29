@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import TeslaPage from "./pages/Teslapage";
 import ApplePage from "./pages/Applepage";
