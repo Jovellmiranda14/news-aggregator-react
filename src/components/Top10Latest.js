@@ -57,7 +57,7 @@ export default function Top10Latest() {
         {articles.map((article, index) => (
           <ListGroup.Item key={index} className="border mb-2 gap-2">
             <Link
-              to={`/article/${index + 1}`}
+              to={`/article?url=${encodeURIComponent(article.url)}`}
               className="text-dark"
               style={{ textDecoration: "none" }}
               state={{ article }}
