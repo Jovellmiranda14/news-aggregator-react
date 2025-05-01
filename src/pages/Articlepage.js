@@ -54,7 +54,7 @@ export default function Articlepage() {
       } catch (err) {
         console.error("Error fetching full article content:", err);
         setError(
-          `The content from the following link could not be loaded: ${urlParam}. This may be due to restrictions or an invalid URL.`
+          `The content from the following link could not be loaded. This may be due to restrictions or an invalid URL.`
         );
       } finally {
         setLoading(false);
