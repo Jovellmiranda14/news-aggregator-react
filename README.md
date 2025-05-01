@@ -34,7 +34,7 @@ npm install
 Create a `.env` file in the project root and add your News API key:
 
 ```
-REACT_APP_NEWS_API_KEY=your_news_api_key_here
+REACT_APP_API_URL=your_news_api_url_here
 ```
 
 ### 4. Run the Development Server
