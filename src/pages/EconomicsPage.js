@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Spinner } from "react-bootstrap";
 import NewsList from "../components/NewsList";
-import fetchArticles from "../utils/fetchArticles";
+import fetchArticles from "../api/fetchArticles";
 
 export default function TeslaPage() {
   const [articles, setArticles] = useState([]);

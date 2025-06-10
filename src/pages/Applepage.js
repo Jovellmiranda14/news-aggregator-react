@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Container, Spinner, Row } from "react-bootstrap";
 import NewsList from "../components/NewsList";
-import fetchArticles from "../utils/fetchArticles";
+import fetchArticles from "../api/fetchArticles";
 export default function ApplePage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
