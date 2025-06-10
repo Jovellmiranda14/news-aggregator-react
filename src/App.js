@@ -11,6 +11,7 @@ import Articlepage from "./pages/Articlepage";
 import SearchPage from "./pages/Searchpage";
 import SportsPage from "./pages/Sportspage";
 import EconomicsPage from "./pages/EconomicsPage";
+import AcademicsPage from "./pages/AcademicsPage";
 export default function App() {
   return (
     <Router>
@@ -21,7 +22,8 @@ export default function App() {
           <Route path="/tesla" element={<TeslaPage />} />
           <Route path="/apple" element={<ApplePage />} />
           <Route path="/sports" element={<SportsPage />} />
-            <Route path="/economics" element={<EconomicsPage />} />
+          <Route path="/academics" element={<AcademicsPage />} />
+          <Route path="/economics" element={<EconomicsPage />} />
           <Route path="/wallstreet" element={<WallStreetPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/search/article" element={<Articlepage />} />

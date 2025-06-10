@@ -24,7 +24,11 @@ export default function NewsList({ articles, category }) {
                     variant="top"
                     src={article?.urlToImage || placeholderImage}
                     className="img-fluid"
-                    style={{ height: "150px", objectFit: "cover" }}
+                    style={{
+                      height: "150px",
+                      objectFit: "cover",
+                      border: "1px solid rgb(154, 156, 165)",
+                    }}
                   />
                   <Card.Body className="p-2">
                     <Card.Title className="fs-5 text-truncate">

@@ -22,7 +22,6 @@ export default function SearchPage() {
             )}`
         );
 
-        // Fetch all URLs in parallel
         const responses = await Promise.all(urls.map((url) => fetch(url)));
         const allData = await Promise.all(
           responses.map((res) => {
@@ -33,7 +32,6 @@ export default function SearchPage() {
           })
         );
 
-        // Combine articles from all responses
         const combinedArticles = allData.flatMap((data) => data.articles || []);
 
         setArticles(combinedArticles.slice(0, 12));
