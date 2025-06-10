@@ -50,27 +50,39 @@ export default function Top10Latest() {
   }
 
   return (
-    <div className="mt-4 px-0" style={{ marginRight: "-1.5rem" }}>
-      <h4>Top Ten Topics</h4>
+    <div
+      className="mt-1 px-0"
+      style={{ marginRight: "-1.5rem", marginLeft: "-0.5rem" }}
+    >
+      <h3>Top Ten Topics</h3>
       <ListGroup className="gap-1 d-flex flex-column">
         {articles.map((article, index) => (
-          <ListGroup.Item key={index} className="border mb-2 gap-2">
+          <ListGroup.Item
+            key={index}
+            className="mb-2 p-2"
+            style={{
+              border: "none",
+              borderRadius: "0", // optional: removes rounding if unwanted
+              boxShadow: "none", // optional: removes any shadow
+              paddingLeft: 0, // optional: if you want full-width alignment
+              paddingRight: 0,
+            }}
+          >
             <Link
               to={`/article?url=${encodeURIComponent(article.url)}`}
-              className="text-dark"
-              style={{ textDecoration: "none" }}
+              className="text-dark text-decoration-none"
               state={{ article }}
             >
-              <h1
-                className="mb-1"
+              <p
+                className="mb-1 text-decoration-underline fw-normal text-justify"
                 style={{
-                  fontSize: "18px",
+                  fontSize: "17px",
                   whiteSpace: "normal",
                   wordBreak: "break-word",
                 }}
               >
                 {article.title}
-              </h1>
+              </p>
             </Link>
           </ListGroup.Item>
         ))}

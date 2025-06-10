@@ -16,7 +16,10 @@ export default function NewsList({ articles, category }) {
           <Row>
             {limitedArticles.map((article, index) => (
               <Col key={index} md={4} className="mb-3">
-                <Card className="h-100 border-black shadow-sm">
+                <Card
+                  className="h-100 shadow-sm p-3"
+                  style={{ border: "1px solid #D4D7DF" }}
+                >
                   <Card.Img
                     variant="top"
                     src={article?.urlToImage || placeholderImage}
@@ -39,7 +42,8 @@ export default function NewsList({ articles, category }) {
                     >
                       <Button
                         variant="primary"
-                        size="sm"
+                        size="md"
+                        className="rounded"
                         style={{ backgroundColor: "#D4D7DF", color: "black" }}
                       >
                         Read more
