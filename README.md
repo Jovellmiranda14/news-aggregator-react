@@ -83,4 +83,3 @@ news-aggregator-react/
 --- 
 ## 🔗 Related API Repository
 - For the backend API used by this project, visit the [News Aggregator React API Repository](https://github.com/Jovellmiranda/news-aggregator-react-api) .
-
