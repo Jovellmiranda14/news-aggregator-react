@@ -99,10 +99,7 @@ export default function Articlepage() {
       <div className="text-muted">
         <p className="mb-1">By: {fallbackArticle.author || "Unknown"}</p>
         <p className="mb-1">
-          Published at:
-          <span className="fw-bold text-muted">
-            {formattedDate} {formattedTime}
-          </span>
+          Published at: {formattedDate} {formattedTime}
         </p>
         <p className="mb-0">Source: {fallbackArticle.source?.name}</p>
       </div>
