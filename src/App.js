@@ -10,8 +10,8 @@ import HomePage from "./pages/Homepage";
 import Articlepage from "./pages/Articlepage";
 import SearchPage from "./pages/Searchpage";
 import SportsPage from "./pages/Sportspage";
-import EconomicsPage from "./pages/EconomicsPage";
-import AcademicsPage from "./pages/AcademicsPage";
+import EconomicsPage from "./pages/Economicspage";
+import AcademicsPage from "./pages/Academicspage";
 export default function App() {
   return (
     <Router>
