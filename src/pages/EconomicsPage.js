@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Container, Spinner, Row } from "react-bootstrap";
+import { Container, Row, Spinner } from "react-bootstrap";
 import NewsList from "../components/NewsList";
 import fetchArticles from "../utils/fetchArticles";
-export default function ApplePage() {
+
+export default function TeslaPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadArticles = async () => {
-      const data = await fetchArticles("apple", 12);
+      const data = await fetchArticles("economics", 12);
       setArticles(data);
       setLoading(false);
     };
@@ -26,7 +27,7 @@ export default function ApplePage() {
             </Spinner>
           </div>
         ) : (
-          <NewsList articles={articles} category="Apple" />
+          <NewsList articles={articles} category="Economics" />
         )}
       </Row>
     </Container>

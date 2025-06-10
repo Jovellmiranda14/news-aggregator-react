@@ -9,7 +9,8 @@ import WallStreetPage from "./pages/WallStreetpage";
 import HomePage from "./pages/Homepage";
 import Articlepage from "./pages/Articlepage";
 import SearchPage from "./pages/Searchpage";
-
+import SportsPage from "./pages/Sportspage";
+import EconomicsPage from "./pages/EconomicsPage";
 export default function App() {
   return (
     <Router>
@@ -19,6 +20,8 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/tesla" element={<TeslaPage />} />
           <Route path="/apple" element={<ApplePage />} />
+          <Route path="/sports" element={<SportsPage />} />
+            <Route path="/economics" element={<EconomicsPage />} />
           <Route path="/wallstreet" element={<WallStreetPage />} />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/search/article" element={<Articlepage />} />

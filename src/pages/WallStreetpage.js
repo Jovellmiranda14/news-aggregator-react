@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Container, Spinner, Row } from "react-bootstrap";
 import NewsList from "../components/NewsList";
+import fetchArticles from "../utils/fetchArticles";
 
 export default function WallStreetPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getWSJNews = async () => {
-      try {
-        let res = await fetch(`${process.env.REACT_APP_API_URL}/api/api?q=wsj`);
-        res = await res.json();
-        setArticles(res.articles.slice(0, 12));
-      } catch (error) {
-        console.error("❌ Error fetching Wall Street Journal news:", error);
-      } finally {
-        setLoading(false);
-      }
+    const loadArticles = async () => {
+      const data = await fetchArticles("wsj", 12);
+      setArticles(data);
+      setLoading(false);
     };
-    getWSJNews();
+
+    loadArticles();
   }, []);
 
   return (

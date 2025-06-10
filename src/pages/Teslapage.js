@@ -1,27 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { Container, Row, Spinner } from "react-bootstrap";
 import NewsList from "../components/NewsList";
+import fetchArticles from "../utils/fetchArticles";
 
 export default function TeslaPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getTeslaNews = async () => {
-      try {
-        let res = await fetch(
-          `${process.env.REACT_APP_API_URL}/api/api?q=tesla`
-        );
-        res = await res.json();
-        setArticles(res.articles.slice(0, 12));
-      } catch (error) {
-        console.error("Error fetching Tesla news:", error);
-      } finally {
-        setLoading(false);
-      }
+    const loadArticles = async () => {
+      const data = await fetchArticles("tesla", 12);
+      setArticles(data);
+      setLoading(false);
     };
 
-    getTeslaNews();
+    loadArticles();
   }, []);
 
   return (

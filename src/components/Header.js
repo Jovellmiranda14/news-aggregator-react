@@ -92,6 +92,12 @@ export default function Header() {
             <Nav.Link as={NavLink} to="/">
               Home
             </Nav.Link>
+            <Nav.Link as={NavLink} to="/sports">
+              Sports
+            </Nav.Link>
+              <Nav.Link as={NavLink} to="/economics">
+              Economics
+            </Nav.Link>
             <Nav.Link as={NavLink} to="/tesla">
               Tesla
             </Nav.Link>

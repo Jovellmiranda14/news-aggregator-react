@@ -7,13 +7,13 @@ export default function ApplePage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadArticles = async () => {
-      const data = await fetchArticles("apple", 12);
-      setArticles(data);
+    const loadNews = async () => {
+      const articles = await fetchArticles("sports", 12);
+      setArticles(articles);
       setLoading(false);
     };
 
-    loadArticles();
+    loadNews();
   }, []);
 
   return (
@@ -26,7 +26,7 @@ export default function ApplePage() {
             </Spinner>
           </div>
         ) : (
-          <NewsList articles={articles} category="Apple" />
+          <NewsList articles={articles} category="sports" />
         )}
       </Row>
     </Container>
