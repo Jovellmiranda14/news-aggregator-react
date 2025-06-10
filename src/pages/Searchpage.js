@@ -9,39 +9,43 @@ export default function SearchPage() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   useEffect(() => {
-      const getDefaultNews = async () => {
-        setLoading(true);
-        try {
-          const queries = suggestions.length > 0 ? suggestions : ["apple", "tesla", "wsj"]; 
-          const urls = queries.map(
-            (query) => `${process.env.REACT_APP_API_URL}/api/api?q=${encodeURIComponent(query)}`
-          );
-  
-          // Fetch all URLs in parallel
-          const responses = await Promise.all(urls.map((url) => fetch(url)));
-          const allData = await Promise.all(
-            responses.map((res) => {
-              if (!res.ok) {
-                throw new Error(`Failed to fetch: ${res.statusText}`);
-              }
-              return res.json();
-            })
-          );
-  
-          // Combine articles from all responses
-          const combinedArticles = allData.flatMap((data) => data.articles || []);
-  
-          setArticles(combinedArticles.slice(0, 12));
-        } catch (err) {
-          console.error("Error fetching news:", err);
-        } finally {
-          setLoading(false); 
-        }
-      };
-  
-      getDefaultNews();
-    }, []); // Will always re-fetch if I inserted suggestions 
+  useEffect(() => {
+    const getDefaultNews = async () => {
+      setLoading(true);
+      try {
+        const queries =
+          suggestions.length > 0 ? suggestions : ["apple", "tesla", "wsj"];
+        const urls = queries.map(
+          (query) =>
+            `${process.env.REACT_APP_API_URL}/api/api?q=${encodeURIComponent(
+              query
+            )}`
+        );
+
+        // Fetch all URLs in parallel
+        const responses = await Promise.all(urls.map((url) => fetch(url)));
+        const allData = await Promise.all(
+          responses.map((res) => {
+            if (!res.ok) {
+              throw new Error(`Failed to fetch: ${res.statusText}`);
+            }
+            return res.json();
+          })
+        );
+
+        // Combine articles from all responses
+        const combinedArticles = allData.flatMap((data) => data.articles || []);
+
+        setArticles(combinedArticles.slice(0, 12));
+      } catch (err) {
+        console.error("Error fetching news:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getDefaultNews();
+  }, []); // Will always re-fetch if I inserted suggestions
   return (
     <Container className="my-4">
       <Row>

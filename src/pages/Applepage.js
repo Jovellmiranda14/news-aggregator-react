@@ -9,9 +9,11 @@ export default function ApplePage() {
   useEffect(() => {
     const getAppleNews = async () => {
       try {
-        let res = await fetch(`${process.env.REACT_APP_API_URL}/api/api?q=apple`);
-         res = await res.json();
-        setArticles(res.articles.slice(0, 12)); 
+        let res = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/api?q=apple`
+        );
+        res = await res.json();
+        setArticles(res.articles.slice(0, 12));
       } catch (error) {
         console.error("❌ Error fetching Apple news:", error);
       } finally {
@@ -23,7 +25,7 @@ export default function ApplePage() {
 
   return (
     <Container className="my-4">
-      <Row> 
+      <Row>
         {loading ? (
           <div className="text-center my-4">
             <Spinner animation="border" role="status">

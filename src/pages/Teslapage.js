@@ -9,10 +9,11 @@ export default function TeslaPage() {
   useEffect(() => {
     const getTeslaNews = async () => {
       try {
-        let res = await fetch(`${process.env.REACT_APP_API_URL}/api/api?q=tesla`);
+        let res = await fetch(
+          `${process.env.REACT_APP_API_URL}/api/api?q=tesla`
+        );
         res = await res.json();
         setArticles(res.articles.slice(0, 12));
-
       } catch (error) {
         console.error("Error fetching Tesla news:", error);
       } finally {

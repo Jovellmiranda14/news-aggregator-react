@@ -29,7 +29,6 @@ export default function Top10Latest() {
         const shuffledNews = shuffleArray(combinedArticles).slice(0, 10);
 
         setArticles(shuffledNews);
-
       } catch (error) {
         console.error("❌ Error fetching latest news:", error);
       } finally {
@@ -40,42 +39,43 @@ export default function Top10Latest() {
     getLatestNews();
   }, []);
 
-  if (loading) {
-    return (
-      <Container className="text-center my-4">
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      </Container>
-    );
-  }
-
+if (loading) {
   return (
-    <Container className="my-4">
-      <h4>Top Ten Topics</h4>
-      <ListGroup className="gap-1 d-flex flex-column">
-        {articles.map((article, index) => (
-          <ListGroup.Item key={index} className="border mb-2 gap-2">
-            <Link
-              to={`/article?url=${encodeURIComponent(article.url)}`}
-              className="text-dark"
-              style={{ textDecoration: "none" }}
-              state={{ article }}
-            >
-              <h1
-                className="mb-1"
-                style={{
-                  fontSize: "18px",
-                  whiteSpace: "normal",
-                  wordBreak: "break-word",
-                }}
-              >
-                {article.title}
-              </h1>
-            </Link>
-          </ListGroup.Item>
-        ))}
-      </ListGroup>
-    </Container>
+    <div className="text-center my-4 px-0" style={{ paddingLeft: "1rem" }}>
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    </div>
   );
+}
+
+return (
+  <div className="mt-4 px-0" style={{ marginRight: "-1.5rem" }}>
+    <h4>Top Ten Topics</h4>
+    <ListGroup className="gap-1 d-flex flex-column">
+      {articles.map((article, index) => (
+        <ListGroup.Item key={index} className="border mb-2 gap-2">
+          <Link
+            to={`/article?url=${encodeURIComponent(article.url)}`}
+            className="text-dark"
+            style={{ textDecoration: "none" }}
+            state={{ article }}
+          >
+            <h1
+              className="mb-1"
+              style={{
+                fontSize: "18px",
+                whiteSpace: "normal",
+                wordBreak: "break-word",
+              }}
+            >
+              {article.title}
+            </h1>
+          </Link>
+        </ListGroup.Item>
+      ))}
+    </ListGroup>
+  </div>
+);
+
 }

@@ -8,10 +8,10 @@ export default function HomePage() {
   const shuffleArray = (array) => {
     return array.sort(() => Math.random() - 0.5);
   };
-  
+
   useEffect(() => {
     const getDefaultNews = async () => {
-      setLoading(true); 
+      setLoading(true);
       try {
         const urls = [
           `${process.env.REACT_APP_API_URL}/api/api?q=apple`,
@@ -23,11 +23,13 @@ export default function HomePage() {
         const responses = await Promise.all(urls.map((url) => fetch(url)));
         const allData = await Promise.all(responses.map((res) => res.json()));
 
-        setArticles(shuffleArray(allData.flatMap((data) => data.articles)).slice(0, 12));// Limit to 12 articles
+        setArticles(
+          shuffleArray(allData.flatMap((data) => data.articles)).slice(0, 12)
+        ); // Limit to 12 articles
       } catch (err) {
         console.error("Error fetching default news:", err);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 

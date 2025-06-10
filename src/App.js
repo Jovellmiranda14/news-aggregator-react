@@ -21,6 +21,7 @@ export default function App() {
           <Route path="/apple" element={<ApplePage />} />
           <Route path="/wallstreet" element={<WallStreetPage />} />
           <Route path="/search" element={<SearchPage />} />
+          <Route path="/search/article" element={<Articlepage />} />
           <Route path="/:category/article/:id" element={<Articlepage />} />
           <Route path="/article" element={<Articlepage />} />
         </Routes>

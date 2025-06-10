@@ -1,14 +1,15 @@
 import React from "react";
-import { Card, Container, Row, Col, Button } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Top10Latest from "./Top10Latest";
 
 export default function NewsList({ articles, category }) {
-  const placeholderImage = "https://placehold.co/600x400?text=No+Image+Available";
+  const placeholderImage =
+    "https://placehold.co/600x400?text=No+Image+Available";
   const limitedArticles = (articles || []).filter(Boolean).slice(0, 16); // 🛡️ filter out broken entries
 
   return (
-    <Container className="mt-4">
+    <div className="container-fluid mt-4 px-2" style={{ marginLeft: "-10px" }}>
       <Row className="mb-3">
         {/* Main Content Area for Articles */}
         <Col md={9}>
@@ -26,12 +27,15 @@ export default function NewsList({ articles, category }) {
                     <Card.Title className="fs-5 text-truncate">
                       {article?.title || "No Title"}
                     </Card.Title>
-                    <Card.Text className="text-muted" style={{ fontSize: "16px" }}>
+                    <Card.Text
+                      className="text-muted"
+                      style={{ fontSize: "16px" }}
+                    >
                       <small>{article?.source?.name || "Unknown Source"}</small>
                     </Card.Text>
                     <Link
                       to={`/article?url=${encodeURIComponent(article.url)}`}
-                      state={{ article }} // optional: keeps fallback data like title/image
+                      state={{ article }}
                     >
                       <Button
                         variant="primary"
@@ -53,6 +57,6 @@ export default function NewsList({ articles, category }) {
           <Top10Latest />
         </Col>
       </Row>
-    </Container>
+    </div>
   );
 }

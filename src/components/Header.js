@@ -67,7 +67,7 @@ export default function Header() {
     if (suggestion) {
       // Handle suggestion click
       setInput("");
-      navigate(`/${suggestion.category || "general"}/article/${index}`, {
+      navigate(`/${"search"}/article/${encodeURIComponent(suggestion.url)}`, {
         state: { article: suggestion },
       });
     } else if (input.trim().length > 3) {

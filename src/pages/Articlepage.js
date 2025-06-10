@@ -80,7 +80,6 @@ export default function Articlepage() {
   };
   const sanitizedContent = DOMPurify.sanitize(fullContent);
 
-
   const { formattedDate, formattedTime } = formatDate(
     fallbackArticle.publishedAt
   );
@@ -102,7 +101,7 @@ export default function Articlepage() {
         Published at: {formattedDate} {formattedTime}
       </p>
       <p>Source: {fallbackArticle.source?.name}</p>
-  
+
       <div className="mt-4">
         {loading ? (
           <p>Loading full content...</p>
@@ -115,13 +114,12 @@ export default function Articlepage() {
           </div>
         ) : (
           <div
-          style={{ maxWidth: "1352px", margin: "0 auto" }}
-          dangerouslySetInnerHTML={{ __html: sanitizedContent }}
-        />
-        
+            className="container-lg mt-4"
+            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+          />
         )}
       </div>
-  
+
       <Button variant="secondary" className="mt-3" onClick={() => navigate(-1)}>
         Go Back
       </Button>
