@@ -96,11 +96,16 @@ export default function Articlepage() {
         />
       )}
       <h1>{fallbackArticle.title}</h1>
-      <p>By: {fallbackArticle.author || "Unknown"}</p>
-      <p>
-        Published at: {formattedDate} {formattedTime}
-      </p>
-      <p>Source: {fallbackArticle.source?.name}</p>
+      <div className="text-muted">
+        <p className="mb-1">By: {fallbackArticle.author || "Unknown"}</p>
+        <p className="mb-1">
+          Published at:
+          <span className="fw-bold text-muted">
+            {formattedDate} {formattedTime}
+          </span>
+        </p>
+        <p className="mb-0">Source: {fallbackArticle.source?.name}</p>
+      </div>
 
       <div className="mt-4">
         {loading ? (
@@ -114,7 +119,8 @@ export default function Articlepage() {
           </div>
         ) : (
           <div
-            className="container-lg mt-4"
+            className="container-lg mt-3"
+            style={{ marginLeft: "-15px" }}
             dangerouslySetInnerHTML={{ __html: sanitizedContent }}
           />
         )}
