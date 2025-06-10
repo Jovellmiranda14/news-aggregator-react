@@ -2,69 +2,68 @@ import React from "react";
 import { Card, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Top10Latest from "./Top10Latest";
+import Banner from "./Banner"; // ✅ Import the Banner
 
 export default function NewsList({ articles, category }) {
   const placeholderImage =
     "https://placehold.co/600x400?text=No+Image+Available";
-  const limitedArticles = (articles || []).filter(Boolean).slice(0, 16); // 🛡️ filter out broken entries
+  const limitedArticles = (articles || []).filter(Boolean).slice(0, 16);
 
   return (
-    <div className="container-fluid mt-4 px-2" style={{ marginLeft: "-10px" }}>
-      <Row className="mb-3">
-        {/* Main Content Area for Articles */}
-        <Col md={9}>
-          <Row>
-            {limitedArticles.map((article, index) => (
-              <Col key={index} md={4} className="mb-3">
-                <Card
-                  className="h-100 shadow-sm p-3"
-                  style={{ border: "1px solid #D4D7DF" }}
-                >
-                  <Card.Img
-                    variant="top"
-                    src={article?.urlToImage || placeholderImage}
-                    className="img-fluid"
-                    style={{
-                      height: "150px",
-                      objectFit: "cover",
-                      border: "1px solid rgb(154, 156, 165)",
-                    }}
-                  />
-                  <Card.Body className="p-2">
-                    <Card.Title className="fs-5 text-truncate">
-                      {article?.title || "No Title"}
-                    </Card.Title>
-                    <Card.Text
-                      className="text-muted"
-                      style={{ fontSize: "16px" }}
-                    >
-                      <small>{article?.source?.name || "Unknown Source"}</small>
-                    </Card.Text>
-                    <Link
-                      to={`/article?url=${encodeURIComponent(article.url)}`}
-                      state={{ article }}
-                    >
-                      <Button
-                        variant="primary"
-                        size="md"
-                        className="rounded"
-                        style={{ backgroundColor: "#D4D7DF", color: "black" }}
+    <>
+      <Banner /> {/* ✅ Render the banner above the article grid */}
+      <div className="container-fluid mt-4 px-2" style={{ marginLeft: "-10px" }}>
+        <Row className="mb-3">
+          <Col md={9}>
+            <Row>
+              {limitedArticles.map((article, index) => (
+                <Col key={index} md={4} className="mb-3">
+                  <Card
+                    className="h-100 shadow-sm p-3"
+                    style={{ border: "1px solid #D4D7DF" }}
+                  >
+                    <Card.Img
+                      variant="top"
+                      src={article?.urlToImage || placeholderImage}
+                      className="img-fluid"
+                      style={{
+                        height: "150px",
+                        objectFit: "cover",
+                        border: "1px solid rgb(154, 156, 165)",
+                      }}
+                    />
+                    <Card.Body className="p-2">
+                      <Card.Title className="fs-5 text-truncate">
+                        {article?.title || "No Title"}
+                      </Card.Title>
+                      <Card.Text className="text-muted" style={{ fontSize: "16px" }}>
+                        <small>{article?.source?.name || "Unknown Source"}</small>
+                      </Card.Text>
+                      <Link
+                        to={`/article?url=${encodeURIComponent(article.url)}`}
+                        state={{ article }}
                       >
-                        Read more
-                      </Button>
-                    </Link>
-                  </Card.Body>
-                </Card>
-              </Col>
-            ))}
-          </Row>
-        </Col>
+                        <Button
+                          variant="primary"
+                          size="md"
+                          className="rounded"
+                          style={{ backgroundColor: "#D4D7DF", color: "black" }}
+                        >
+                          Read more
+                        </Button>
+                      </Link>
+                    </Card.Body>
+                  </Card>
+                </Col>
+              ))}
+            </Row>
+          </Col>
 
-        {/* Top10Latest Sidebar */}
-        <Col md={3}>
-          <Top10Latest />
-        </Col>
-      </Row>
-    </div>
+          <Col md={3}>
+            <Top10Latest />
+          </Col>
+        </Row>
+      </div>
+    </>
   );
 }
