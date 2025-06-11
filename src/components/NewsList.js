@@ -3,6 +3,7 @@ import { Card, Row, Col, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Top10Latest from "./Top10Latest";
 import Banner from "./Banner"; // ✅ Import the Banner
+import Weather from "./Weather"; // ✅ Import the Weather component
 
 export default function NewsList({ articles, category }) {
   const placeholderImage =
@@ -12,7 +13,10 @@ export default function NewsList({ articles, category }) {
   return (
     <>
       <Banner /> {/* ✅ Render the banner above the article grid */}
-      <div className="container-fluid mt-4 px-2" style={{ marginLeft: "-10px" }}>
+      <div
+        className="container-fluid mt-4 px-2"
+        style={{ marginLeft: "-10px" }}
+      >
         <Row className="mb-3">
           <Col md={9}>
             <Row>
@@ -36,8 +40,13 @@ export default function NewsList({ articles, category }) {
                       <Card.Title className="fs-5 text-truncate">
                         {article?.title || "No Title"}
                       </Card.Title>
-                      <Card.Text className="text-muted" style={{ fontSize: "16px" }}>
-                        <small>{article?.source?.name || "Unknown Source"}</small>
+                      <Card.Text
+                        className="text-muted"
+                        style={{ fontSize: "16px" }}
+                      >
+                        <small>
+                          {article?.source?.name || "Unknown Source"}
+                        </small>
                       </Card.Text>
                       <Link
                         to={`/article?url=${encodeURIComponent(article.url)}`}
@@ -60,6 +69,7 @@ export default function NewsList({ articles, category }) {
           </Col>
 
           <Col md={3}>
+            <Weather />
             <Top10Latest />
           </Col>
         </Row>
