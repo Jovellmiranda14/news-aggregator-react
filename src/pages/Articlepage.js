@@ -8,7 +8,8 @@ export default function Articlepage() {
   const [searchParams] = useSearchParams();
   const urlParam = searchParams.get("url");
 
-  const [fullContent, setFullContent] = useState("Loading content...");
+  const [articleContentHtml, setArticleContentHtml] = useState("");
+  const [readingTimeAndDate, setReadingTimeAndDate] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -21,12 +22,15 @@ export default function Articlepage() {
   };
 
   useEffect(() => {
-    const fetchFullContent = async () => {
+    const fetchAndParseContent = async () => {
       if (!urlParam) return;
 
       setLoading(true);
+      setError(null);
+      setArticleContentHtml("");
+      setReadingTimeAndDate(null);
+
       try {
-        // Fetch the full article content using the URL parameter
         const response = await fetch(
           `${
             process.env.REACT_APP_API_URL
@@ -37,31 +41,56 @@ export default function Articlepage() {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        const data = await response.json();
-        const { content } = data;
+        const { content } = await response.json();
 
         if (content) {
-          // Clean the content for better readability
-          const cleanContent = content
-            .replace(/\n+/g, "\n")
-            .replace(/^\s+|\s+$/g, "")
-            .replace(/(\n\s*\n)+/g, "\n\n");
+          const cleanHtml = DOMPurify.sanitize(content, {
+            USE_PROFILES: { html: true },
+          });
 
-          setFullContent(cleanContent);
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(cleanHtml, "text/html");
+
+          const readingTimeElement = doc.querySelector('p[data-version="v1"]');
+          const dateElement = doc.querySelector('time[data-version="v1"]');
+
+          let extractedTime = readingTimeElement?.textContent.trim() || "";
+          let extractedDate = dateElement?.textContent.trim() || "";
+
+          readingTimeElement?.remove();
+          dateElement?.closest("p")?.remove();
+
+          const timeAndDate = [extractedTime, extractedDate]
+            .filter(Boolean)
+            .join(" · ");
+
+          setReadingTimeAndDate(timeAndDate || null);
+
+          const articleContainer =
+            doc.querySelector("#readability-page-1 .article") || doc.body;
+
+          // ❌ Remove all images inside content
+          articleContainer
+            .querySelectorAll("img")
+            .forEach((img) => img.remove());
+
+          const finalContentHtml = articleContainer.innerHTML;
+
+          setArticleContentHtml(finalContentHtml);
         } else {
-          setFullContent("Content could not be retrieved.");
+          setArticleContentHtml("<p>Content could not be retrieved.</p>");
         }
       } catch (err) {
-        console.error("Error fetching full article content:", err);
+        console.error("Error fetching or parsing article content:", err);
         setError(
-          `The content from the following link could not be loaded. This may be due to restrictions or an invalid URL.`
+          "The content from the following link could not be loaded or parsed. This may be due to restrictions or an invalid URL."
         );
       } finally {
         setLoading(false);
       }
     };
 
-    fetchFullContent();
+    fetchAndParseContent();
   }, [urlParam]);
 
   const formatDate = (dateString) => {
@@ -78,7 +107,6 @@ export default function Articlepage() {
       }),
     };
   };
-  const sanitizedContent = DOMPurify.sanitize(fullContent);
 
   const { formattedDate, formattedTime } = formatDate(
     fallbackArticle.publishedAt
@@ -92,16 +120,21 @@ export default function Articlepage() {
           alt={fallbackArticle.title}
           className="mb-3"
           fluid
-          style={{ width: "100%", height: "auto" }} // Full width, maintain aspect ratio
+          style={{ width: "100%", height: "auto" }}
         />
       )}
+
       <h1>{fallbackArticle.title}</h1>
       <div className="text-muted">
         <p className="mb-1">By: {fallbackArticle.author || "Unknown"}</p>
         <p className="mb-1">
-          Published at: {formattedDate} {formattedTime}
+          Published at:{" "}
+          <span className="fw-bold text-muted">
+            {formattedDate} {formattedTime}
+          </span>
         </p>
         <p className="mb-0">Source: {fallbackArticle.source?.name}</p>
+        {readingTimeAndDate && <p className="mt-2">{readingTimeAndDate}</p>}
       </div>
 
       <div className="mt-4">
@@ -118,7 +151,7 @@ export default function Articlepage() {
           <div
             className="container-lg mt-3"
             style={{ marginLeft: "-15px" }}
-            dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+            dangerouslySetInnerHTML={{ __html: articleContentHtml }}
           />
         )}
       </div>
