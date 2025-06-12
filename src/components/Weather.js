@@ -99,14 +99,14 @@ export default function Weather() {
               <p
                 className="mb-1 text-decoration-underline fw-normal"
                 style={{
-                  fontSize: "19px",
+                  fontSize: "17px",
                   whiteSpace: "normal",
                   wordBreak: "break-word",
                 }}
               >
                 {current.condition.text} — {current.temp_c}°C
               </p>
-              <p className="mb-0 text-muted" style={{ fontSize: "16px" }}>
+              <p className="mb-0 text-muted" style={{ fontSize: "15px" }}>
                 Feels like: {current.feelslike_c}°C | Humidity:{" "}
                 {current.humidity}%
               </p>
@@ -125,14 +125,14 @@ export default function Weather() {
         >
           <p
             className="mb-1 fw-normal"
-            style={{ fontSize: "16px", color: "#555" }}
+            style={{ fontSize: "15px", color: "#555" }}
           >
             Wind: {current.wind_kph} kph {current.wind_dir} | Pressure:{" "}
             {current.pressure_mb} mb
           </p>
           <p
             className="mb-0 fw-normal"
-            style={{ fontSize: "16px", color: "#555" }}
+            style={{ fontSize: "15px", color: "#555" }}
           >
             Visibility: {current.vis_km} km | UV Index: {current.uv}
           </p>
