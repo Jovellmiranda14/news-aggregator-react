@@ -6,13 +6,52 @@ export default function Weather() {
   const [weatherData, setWeatherData] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
+    const baseCountries = [
+      "Japan",
+      "France",
+      "Canada",
+      "Brazil",
+      "Germany",
+      "Australia",
+      "India",
+      "South Africa",
+      "United Kingdom",
+      "United States",
+      "Italy",
+      "China",
+      "Russia",
+      "Mexico",
+    ];
+
+    // Shuffle the base list
+    const shuffled = baseCountries.sort(() => Math.random() - 0.5);
+
+    // Insert "Philippines" every 3 items
+    const countriesWithPH = [];
+    for (let i = 0; i < shuffled.length; i++) {
+      if (i % 3 === 0) {
+        countriesWithPH.push("Philippines");
+      }
+      countriesWithPH.push(shuffled[i]);
+    }
+
+    let index = 0;
+
     const loadWeather = async () => {
-      const data = await fetchWeather();
+      const country = countriesWithPH[index % countriesWithPH.length];
+      const data = await fetchWeather(country);
       if (data) setWeatherData(data);
       setLoading(false);
+      index++;
     };
 
+    // Load immediately
     loadWeather();
+
+    // Then update every 3 seconds
+    const interval = setInterval(loadWeather, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   if (loading) {
@@ -34,7 +73,7 @@ export default function Weather() {
       className="mt-1 px-2 mb-4"
       style={{
         marginRight: "-1.5rem",
-        marginLeft: "-0.5rem",
+        marginLeft: "0.1rem",
       }}
     >
       <h3>Weather in {location.name}</h3>
@@ -54,20 +93,20 @@ export default function Weather() {
               src={`https:${current.condition.icon}`}
               alt={current.condition.text}
               className="me-2"
-              style={{ width: "50px", height: "50px" }}
+              style={{ width: "65px", height: "65px" }}
             />
             <div>
               <p
                 className="mb-1 text-decoration-underline fw-normal"
                 style={{
-                  fontSize: "17px",
+                  fontSize: "19px",
                   whiteSpace: "normal",
                   wordBreak: "break-word",
                 }}
               >
                 {current.condition.text} — {current.temp_c}°C
               </p>
-              <p className="mb-0 text-muted" style={{ fontSize: "14px" }}>
+              <p className="mb-0 text-muted" style={{ fontSize: "16px" }}>
                 Feels like: {current.feelslike_c}°C | Humidity:{" "}
                 {current.humidity}%
               </p>
@@ -86,14 +125,14 @@ export default function Weather() {
         >
           <p
             className="mb-1 fw-normal"
-            style={{ fontSize: "14px", color: "#555" }}
+            style={{ fontSize: "16px", color: "#555" }}
           >
             Wind: {current.wind_kph} kph {current.wind_dir} | Pressure:{" "}
             {current.pressure_mb} mb
           </p>
           <p
             className="mb-0 fw-normal"
-            style={{ fontSize: "14px", color: "#555" }}
+            style={{ fontSize: "16px", color: "#555" }}
           >
             Visibility: {current.vis_km} km | UV Index: {current.uv}
           </p>

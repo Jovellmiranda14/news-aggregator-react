@@ -52,7 +52,7 @@ export default function Top10Latest() {
   return (
     <div
       className="mt-1 px-2"
-      style={{ marginRight: "-1.5rem", marginLeft: "-0.5rem" }}
+      style={{ marginRight: "-1.5rem", marginLeft: "0.1rem" }}
     >
       <h3>Top Ten Topics</h3>
       <ListGroup className="gap-1 d-flex flex-column">
