@@ -19,7 +19,7 @@ Bootstrapped with [News API](https://newsapi.org/).
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/Jovellmiranda/news-aggregator-react.git
+git clone https://github.com/Jovellmiranda14/news-aggregator-react.git
 cd news-aggregator-react
 ```
 
